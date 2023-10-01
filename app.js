@@ -15,12 +15,21 @@ app.get('/', (req, res) => {
 })
 
 app.get('/restaurants', (req, res) => {
-  res.render('index', {restaurants: restaurants})
+  const keyword = req.query.search?.trim().toLowerCase()
+  const matchedRestaurants = keyword? restaurants.filter((rst) => 
+    Object.values(rst).some((prop) => {
+      if (typeof prop === 'string') {
+        return prop.toLowerCase().includes(keyword)
+      }
+      return false
+    })
+  ) : restaurants
+  res.render('index', {restaurants: matchedRestaurants, keyword})
 })
 
 app.get('/restaurant/:id', (req, res) => {
   const id = req.params.id
-  const restaurant = restaurants.find((rest) => rest.id.toString() === id)
+  const restaurant = restaurants.find((rst) => rst.id.toString() === id)
   res.render('detail', {restaurant})
 })
 
