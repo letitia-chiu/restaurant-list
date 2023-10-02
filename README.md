@@ -1,5 +1,5 @@
 # 餐廳清單 (Restaurant List)
-此專案為 ALPHA Camp Dev C3 M3 指標作業 所製作。
+此專案為 ALPHA Camp Dev C3 M3 指標作業 所製作。  
 運用 Node.js 建立本機伺服器，並透過 Express 與 Template Engine (Handlebars) 建立簡易的餐廳清單網頁。
 
 ## 版本
@@ -11,8 +11,8 @@
 - 透過餐廳的中英文名稱、種類、描述搜尋。
 
 ## 執行環境 (RTE)
-[Node.js](https://nodejs.org/) (v18.18.0)
-*執行此專案前，需安裝 Node.js。*
+[Node.js](https://nodejs.org/) (v18.18.0)  
+ℹ️ *執行此專案前，需安裝 Node.js。*
 
 ## 安裝 (Installation)
 1. 開啟終端機 (Terminal)，cd 至存放本專案的資料夾，執行以下指令將本專案 clone 至本機電腦。
@@ -39,8 +39,8 @@ npm install
 npm run dev
 ```
 
-當 Terminal 出現以下字樣，即代表伺服器啟動成功：
-`Express server is running on http://localhost:3000`
+當 Terminal 出現以下字樣，即代表伺服器啟動成功：  
+`Express server is running on http://localhost:3000`  
 現在，您可開啟任一瀏覽器輸入 http://localhost:3000 來使用餐廳清單網頁。
 
 ## 使用工具 (Tools)
