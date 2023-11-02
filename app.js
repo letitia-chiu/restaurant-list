@@ -1,7 +1,12 @@
 const express = require('express')
-const {engine} = require('express-handlebars')
 const app = express()
+
+const {engine} = require('express-handlebars')
+
 const port = 3000
+
+const db = require('./models')
+const Restaurant = db.Restaurant
 const restaurants = require('./public/jsons/restaurant.json').results
 
 app.engine('.hbs', engine({extname: '.hbs'}))
