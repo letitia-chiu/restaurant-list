@@ -38,7 +38,7 @@ module.exports = {
       },
       rating: {
         allowNull: false,
-        type: Sequelize.NUMBER
+        type: Sequelize.DECIMAL(2,1)
       },
       description: {
         type: Sequelize.STRING
