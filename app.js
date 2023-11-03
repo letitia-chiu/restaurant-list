@@ -59,7 +59,7 @@ app.get('/restaurant/:id', (req, res) => {
 })
 
 app.get('/restaurants/new', (req, res) => {
-  res.send('新增餐廳頁面')
+  res.render('new')
 })
 
 app.get('/restaurant/:id/edit', (req, res) => {
