@@ -49,8 +49,13 @@ app.get('/restaurants', async (req, res) => {
 
 app.get('/restaurant/:id', (req, res) => {
   const id = req.params.id
-  const restaurant = restaurants.find((rst) => rst.id.toString() === id)
-  res.render('detail', {restaurant})
+  return Restaurant.findByPk(id, {
+    attributes: ['id', 'name', 'category', 'image', 'location', 'phone', 'google_map', 'description'],
+    raw: true
+  })
+    .then((restaurant) => res.render('detail', { restaurant }))
+  // const restaurant = restaurants.find((rst) => rst.id.toString() === id)
+  // res.render('detail', {restaurant})
 })
 
 app.get('/restaurants/new', (req, res) => {
