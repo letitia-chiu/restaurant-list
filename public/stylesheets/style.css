@@ -99,3 +99,21 @@ header {
   }
 
 }
+
+.fn-bar {
+  display: flex;
+  justify-content: end;
+  padding-top: 10px;
+  border-top: 1px solid #cccccc;
+}
+
+.fn-bar a {
+  align-self: center;
+  color: #666666;
+  text-decoration: none;
+}
+
+.fn-bar a:hover {
+  text-decoration: underline;
+  color: #9b4b4b;
+}

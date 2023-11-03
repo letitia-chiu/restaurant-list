@@ -68,15 +68,23 @@ app.get('/restaurant/:id/edit', (req, res) => {
 })
 
 app.post('/restaurants', (req, res) => {
+  const id = req.params.id
   res.send('已新增一筆新的餐廳資料')
 })
 
 app.put('/restaurant/:id', (req, res) => {
+  const id = req.params.id
   res.send(`已編輯餐廳（ID: ${id})`)
 })
 
 app.delete('/restaurant/:id', (req, res) => {
+  const id = req.params.id
   res.send(`已刪除餐廳（ID: ${id})`)
+})
+
+app.post('/restaurant/:id', (req, res) => {
+  const id = req.params.id
+  res.send(`測試路由：已刪除餐廳（ID: ${id})`)
 })
 
 app.listen(port, () => {
