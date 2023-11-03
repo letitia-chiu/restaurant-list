@@ -117,3 +117,20 @@ header {
   text-decoration: underline;
   color: #9b4b4b;
 }
+
+.stitle-add {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.stitle-add a {
+  margin-right: 10px;
+  align-self: center;
+  color: #4592af;
+  text-decoration: none;
+}
+
+.stitle-add a:hover {
+  color: #226089;
+}
