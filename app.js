@@ -54,8 +54,6 @@ app.get('/restaurant/:id', (req, res) => {
     raw: true
   })
     .then((restaurant) => res.render('detail', { restaurant }))
-  // const restaurant = restaurants.find((rst) => rst.id.toString() === id)
-  // res.render('detail', {restaurant})
 })
 
 app.get('/restaurants/new', (req, res) => {
