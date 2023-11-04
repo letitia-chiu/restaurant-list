@@ -14,10 +14,12 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "migrate": "npx sequelize db:migrate",
-    "undo-migrate": "npx sequelize db:migrate:undo",
-    "seed": "npx sequelize db:seed:all",
-    "undo-seed": "npx sequelize db:seed:undo",
+    "db:create": "node create-db.js",
+    "db:migrate": "npx sequelize db:migrate",
+    "db:seed": "npx sequelize db:seed:all",
+    "setup-db": "node create-db.js && npx sequelize db:migrate && npx sequelize db:seed:all",
+    "db:migrate:undo": "npx sequelize db:migrate:undo",
+    "db:seed:undo": "npx sequelize db:seed:undo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
