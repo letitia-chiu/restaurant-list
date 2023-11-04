@@ -8,7 +8,7 @@
     "sequelize-cli": "^6.6.0"
   },
   "name": "restaurant-list",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "ALPHA Camp Dev C3 M3 summative work by Letitia",
   "main": "app.js",
   "scripts": {
