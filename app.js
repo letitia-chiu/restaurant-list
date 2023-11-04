@@ -114,7 +114,9 @@ app.put('/restaurant/:id', (req, res) => {
 
 app.delete('/restaurant/:id', (req, res) => {
   const id = req.params.id
-  res.send(`已刪除餐廳（ID: ${id})`)
+  return Restaurant.destroy({ where: {id} })
+    .then(() => res.redirect('/restaurants'))
+    .catch((err) => console.log(err))
 })
 
 app.listen(port, () => {

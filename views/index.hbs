@@ -52,8 +52,8 @@
               <div class="fn-bar mt-3">
                 <a href="/restaurant/{{restaurant.id}}/edit">編輯</a>
                 <a href="/restaurant/{{restaurant.id}}" class="ms-3">詳細</a>
-                <form action="/restaurant/{{restaurant.id}}" method="post" class="ms-3">
-                  <button type="submit" class="btn btn-secondary"><i class="fa-solid fa-trash-can"></i></button>
+                <form id="delete-restaurant" method="post" class="ms-3">
+                  <button type="button" onclick="confirmDelete({{restaurant.id}})" class="btn btn-secondary"><i class="fa-solid fa-trash-can"></i></button>
                 </form>
               </div>
 
@@ -67,3 +67,5 @@
     </div>
   </div>
 </div>
+
+<script src="/javascripts/confirm-delete.js"></script>
