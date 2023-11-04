@@ -82,10 +82,10 @@ app.post('/restaurants', (req, res) => {
     name: add.name,
     name_en: add.name_en || null,
     category: add.category,
-    image: add.image,
+    image: add.image || null,
     location: add.location,
     phone: add.phone,
-    google_map: add.google_map,
+    google_map: add.google_map || null,
     rating: add.rating,
     description: add.description || null
   })
@@ -100,10 +100,10 @@ app.put('/restaurant/:id', (req, res) => {
     name: edit.name,
     name_en: edit.name_en || null,
     category: edit.category,
-    image: edit.image,
+    image: edit.image || null,
     location: edit.location,
     phone: edit.phone,
-    google_map: edit.google_map,
+    google_map: edit.google_map || null,
     rating: edit.rating,
     description: edit.description || null
   }, { where: {id} })
