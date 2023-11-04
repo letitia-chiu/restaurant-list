@@ -7,13 +7,13 @@ const port = 3000
 
 const db = require('./models')
 const Restaurant = db.Restaurant
-// const restaurants = require('./public/jsons/restaurant.json').results
 
 app.engine('.hbs', engine({extname: '.hbs'}))
 app.set('view engine', '.hbs')
 app.set('views', './views')
 
 app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
   res.redirect('/restaurants')
@@ -66,8 +66,20 @@ app.get('/restaurant/:id/edit', (req, res) => {
 })
 
 app.post('/restaurants', (req, res) => {
-  const id = req.params.id
-  res.send('已新增一筆新的餐廳資料')
+  const add = req.body
+  return Restaurant.create({
+    name: add.name,
+    name_en: add.name_en || null,
+    category: add.category,
+    image: add.image,
+    location: add.location,
+    phone: add.phone,
+    google_map: add.google_map,
+    rating: add.rating,
+    description: add.description || null
+  })
+    .then(() => res.redirect('/restaurants'))
+    .catch((err) => console.log(err))
 })
 
 app.put('/restaurant/:id', (req, res) => {
