@@ -1,7 +1,9 @@
 const express = require('express')
 const app = express()
+const methodOverride = require('method-override')
+const handlebars = require('handlebars')
 
-const {engine} = require('express-handlebars')
+const { engine } = require('express-handlebars')
 
 const port = 3000
 
@@ -14,6 +16,11 @@ app.set('views', './views')
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
+
+handlebars.registerHelper('eq', (arg1, arg2) => {
+  return arg1 === arg2
+})
 
 app.get('/', (req, res) => {
   res.redirect('/restaurants')
@@ -88,7 +95,21 @@ app.post('/restaurants', (req, res) => {
 
 app.put('/restaurant/:id', (req, res) => {
   const id = req.params.id
-  res.send(`已編輯餐廳（ID: ${id})`)
+  const edit = req.body
+  return Restaurant.update({
+    name: edit.name,
+    name_en: edit.name_en || null,
+    category: edit.category,
+    image: edit.image,
+    location: edit.location,
+    phone: edit.phone,
+    google_map: edit.google_map,
+    rating: edit.rating,
+    description: edit.description || null
+  }, { where: {id} })
+    .then(() => res.redirect(`/restaurant/${id}`))
+    .catch((err) => console.log(err))
+  
 })
 
 app.delete('/restaurant/:id', (req, res) => {

@@ -1,6 +1,6 @@
 <div class="container">
   <div class="card my-5">
-    <form action="/restaurant/{{id}}" method="post" id="create-form" class="needs-validation" novalidate>
+    <form action="/restaurant/{{id}}?_method=PUT" method="post" id="create-form" class="needs-validation" novalidate>
       <div class="card-header" style="font-weight: bold;">
         編輯餐廳
       </div>
@@ -28,22 +28,22 @@
         <div class="row mb-3">
           <label for="category" class="col-sm-4 col-form-label">餐廳類別</label>
           <div class="col-sm-8">
-            <select name="category" class="form-control" id="category" value="{{restaurant.category}}" required>
-              <option>台式料理</option>
-              <option>中式料理</option>
-              <option>韓式料理</option>
-              <option>日本料理</option>
-              <option>中東料理</option>
-              <option>越南料理</option>
-              <option>泰國料理</option>
-              <option>義式餐廳</option>
-              <option>法式餐廳</option>
-              <option>美式餐廳</option>
-              <option>酒吧</option>
-              <option>咖啡</option>
-              <option>下午茶</option>
-              <option>早午餐</option>
-              <option>其他</option>
+            <select name="category" class="form-control" id="category" required>
+              <option {{#if (eq restaurant.category '台式料理')}}selected{{/if}}>台式料理</option>
+              <option {{#if (eq restaurant.category '中式料理')}}selected{{/if}}>中式料理</option>
+              <option {{#if (eq restaurant.category '韓式料理')}}selected{{/if}}>韓式料理</option>
+              <option {{#if (eq restaurant.category '日本料理')}}selected{{/if}}>日本料理</option>
+              <option {{#if (eq restaurant.category '中東料理')}}selected{{/if}}>中東料理</option>
+              <option {{#if (eq restaurant.category '越南料理')}}selected{{/if}}>越南料理</option>
+              <option {{#if (eq restaurant.category '泰國料理')}}selected{{/if}}>泰國料理</option>
+              <option {{#if (eq restaurant.category '義式餐廳')}}selected{{/if}}>義式餐廳</option>
+              <option {{#if (eq restaurant.category '法式餐廳')}}selected{{/if}}>法式餐廳</option>
+              <option {{#if (eq restaurant.category '美式餐廳')}}selected{{/if}}>美式餐廳</option>
+              <option {{#if (eq restaurant.category '酒吧')}}selected{{/if}}>酒吧</option>
+              <option {{#if (eq restaurant.category '咖啡')}}selected{{/if}}>咖啡</option>
+              <option {{#if (eq restaurant.category '下午茶')}}selected{{/if}}>下午茶</option>
+              <option {{#if (eq restaurant.category '早午餐')}}selected{{/if}}>早午餐</option>
+              <option {{#if (eq restaurant.category '其他')}}selected{{/if}}>其他</option>
             </select>
             <div class="invalid-feedback">* 請選擇餐廳類別</div>
           </div>
