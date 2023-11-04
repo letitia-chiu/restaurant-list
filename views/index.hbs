@@ -50,8 +50,12 @@
             </a>
 
               <div class="fn-bar mt-3">
-                <a href="/restaurant/{{restaurant.id}}/edit">編輯</a>
-                <a href="/restaurant/{{restaurant.id}}" class="ms-3">詳細</a>
+                <a href="/restaurant/{{restaurant.id}}/edit">
+                  <i class="fa-solid fa-pen-to-square" style="margin-right: 3px;"></i>編輯
+                </a>
+                <a href="/restaurant/{{restaurant.id}}" class="ms-3">
+                  <i class="fa-solid fa-circle-info" style="margin-right: 3px;"></i>詳細
+                </a>
                 <form id="delete-restaurant" method="post" class="ms-3">
                   <button type="button" onclick="confirmDelete({{restaurant.id}})" class="btn btn-secondary"><i class="fa-solid fa-trash-can"></i></button>
                 </form>

@@ -43,6 +43,29 @@
       <img class="rounded mx-auto d-block mb-4 w-100"
         src="{{#if restaurant.image}}{{restaurant.image}}{{else}}/image/no-img.jpg{{/if}}" onerror="this.src='/image/not-available.png';" alt="{{restaurant.name}}"
         style="max-width: 600px;">
+      
+      <div class="fn-bar my-5">
+        <a href="/restaurant/{{restaurant.id}}/edit">
+          <button type="button" class="btn btn-success">
+            <i class="fa-solid fa-pen-to-square" style="margin-right: 10px;"></i>
+            編輯
+          </button>
+        </a>
+        <form id="delete-restaurant" method="post" class="ms-3">
+          <button type="button" onclick="confirmDelete({{restaurant.id}})" class="btn btn-danger">
+            <i class="fa-solid fa-trash-can" style="margin-right: 10px;"></i>
+            刪除
+          </button>
+        </form>
+        <a href="/restaurants">
+          <button type="button" class="btn btn-secondary ms-3">
+            <i class="fa-solid fa-house" style="margin-right: 10px;"></i>
+            返回首頁
+          </button>
+        </a>
+      </div>
     </div>
   </div>
 </div>
+
+<script src="/javascripts/confirm-delete.js"></script>
