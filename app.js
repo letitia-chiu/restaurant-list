@@ -62,7 +62,11 @@ app.get('/restaurants/new', (req, res) => {
 
 app.get('/restaurant/:id/edit', (req, res) => {
   const id = req.params.id
-  res.send(`編輯餐廳頁面（ID: ${id})`)
+  return Restaurant.findByPk(id, {
+    raw: true
+  })
+    .then((restaurant) => res.render('edit', { id, restaurant}))
+    .catch((err) => console.log(err))
 })
 
 app.post('/restaurants', (req, res) => {
@@ -90,11 +94,6 @@ app.put('/restaurant/:id', (req, res) => {
 app.delete('/restaurant/:id', (req, res) => {
   const id = req.params.id
   res.send(`已刪除餐廳（ID: ${id})`)
-})
-
-app.post('/restaurant/:id', (req, res) => {
-  const id = req.params.id
-  res.send(`測試路由：已刪除餐廳（ID: ${id})`)
 })
 
 app.listen(port, () => {

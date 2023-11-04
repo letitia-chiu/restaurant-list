@@ -1,0 +1,129 @@
+<div class="container">
+  <div class="card my-5">
+    <form action="/restaurant/{{id}}" method="post" id="create-form" class="needs-validation" novalidate>
+      <div class="card-header" style="font-weight: bold;">
+        編輯餐廳
+      </div>
+
+      <div class="card-body">
+
+        {{!-- 餐廳名稱 --}}
+        <div class="row mb-3">
+          <label for="name" class="col-sm-4 col-form-label">餐廳名稱</label>
+          <div class="col-sm-8">
+            <input name="name" type="text" class="form-control" id="name" value="{{restaurant.name}}" required>
+            <div class="invalid-feedback">* 請輸入餐廳名稱</div>
+          </div>
+        </div>
+
+        {{!-- 餐廳英文名稱 --}}
+        <div class="row mb-3">
+          <label for="name_en" class="col-sm-4 col-form-label">餐廳英文名稱（選填）</label>
+          <div class="col-sm-8">
+            <input name="name_en" type="text" class="form-control" id="name_en" value="{{restaurant.name_en}}">
+          </div>
+        </div>
+
+        {{!-- 餐廳類別 --}}
+        <div class="row mb-3">
+          <label for="category" class="col-sm-4 col-form-label">餐廳類別</label>
+          <div class="col-sm-8">
+            <select name="category" class="form-control" id="category" value="{{restaurant.category}}" required>
+              <option>台式料理</option>
+              <option>中式料理</option>
+              <option>韓式料理</option>
+              <option>日本料理</option>
+              <option>中東料理</option>
+              <option>越南料理</option>
+              <option>泰國料理</option>
+              <option>義式餐廳</option>
+              <option>法式餐廳</option>
+              <option>美式餐廳</option>
+              <option>酒吧</option>
+              <option>咖啡</option>
+              <option>下午茶</option>
+              <option>早午餐</option>
+              <option>其他</option>
+            </select>
+            <div class="invalid-feedback">* 請選擇餐廳類別</div>
+          </div>
+        </div>
+
+        {{!-- 餐廳圖片 --}}
+        <div class="row mb-3">
+          <label for="image" class="col-sm-4 col-form-label">餐廳圖片</label>
+          <div class="col-sm-8">
+            <input name="image" type="url" class="form-control" id="image" value="{{restaurant.image}}" placeholder="請輸入圖片網址" required>
+            <div class="invalid-feedback">* 請輸入圖片網址</div>
+          </div>
+        </div>
+
+        {{!-- 地址 --}}
+        <div class="row mb-3">
+          <label for="location" class="col-sm-4 col-form-label">餐廳地址</label>
+          <div class="col-sm-8">
+            <input name="location" type="text" class="form-control" id="location" value="{{restaurant.location}}" required>
+            <div class="invalid-feedback">* 請輸入餐廳地址</div>
+          </div>
+        </div>
+
+        {{!-- 電話 --}}
+        <div class="row mb-3">
+          <label for="phone" class="col-sm-4 col-form-label">餐廳電話</label>
+          <div class="col-sm-8">
+            <input name="phone" type="text" class="form-control" id="phone" value="{{restaurant.phone}}" required>
+            <div class="invalid-feedback">* 請輸入餐廳電話</div>
+          </div>
+        </div>
+
+        {{!-- Google Map --}}
+        <div class="row mb-3">
+          <label for="google_map" class="col-sm-4 col-form-label">Google Map 連結</label>
+          <div class="col-sm-8">
+            <input name="google_map" type="url" class="form-control" id="google_map" value="{{restaurant.google_map}}"
+              placeholder="請輸入Google Map 連結">
+            <div class="invalid-feedback">* 請輸入Google Map 連結</div>
+          </div>
+        </div>
+
+        {{!-- 餐廳評分 --}}
+        <div class="row mb-3">
+          <label for="rating" class="col-sm-4 col-form-label">餐廳評分</label>
+          <div class="col-sm-8">
+            <input name="rating" type="number" min="1" max="5" step="0.1" class="form-control" id="rating" value="{{restaurant.rating}}"
+              placeholder="輸入評分 1.0 ~ 5.0【 例：3.5 】">
+            <div class="invalid-feedback">* 請輸入餐廳評分</div>
+          </div>
+        </div>
+
+        {{!-- 說明 --}}
+        <div class="row mb-3">
+          <label for="description" class="col-sm-4 col-form-label">說明（選填）</label>
+          <div class="col-sm-8">
+            <textarea name="description" rows="3" class="form-control" id="description" value="{{restaurant.description}}"></textarea>
+          </div>
+        </div>
+
+      </div> {{!-- card-body --}}
+
+      <div class="card-footer text-muted d-flex justify-content-end">
+        <button type="submit" class="btn btn-success">
+          <i class="fa-solid fa-pen-to-square" style="margin-right: 10px;"></i>儲存
+        </button>
+
+        <button type="reset" class="btn btn-primary ms-3" id="clear-btn">
+          <i class="fa-solid fa-arrow-rotate-left" style="margin-right: 10px;"></i>復原
+        </button>
+
+        <a href="/restaurant/{{id}}" style="text-decoration: none;">
+          <button type="button" class="btn btn btn-secondary ms-3">
+            <i class="fa-solid fa-right-from-bracket" style="margin-right: 10px;"></i>取消
+          </button>
+        </a>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script src="/javascripts/form.js"></script>
