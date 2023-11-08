@@ -4,7 +4,9 @@ const router = express.Router()
 const db = require('../models')
 const Restaurant = db.Restaurant
 
-const limit = 9 // Items per page
+const Op = require('sequelize').Op
+
+const limit = 6 // Items per page
 
 router.get('/', async (req, res, next) => {
   try {
@@ -28,33 +30,53 @@ router.get('/', async (req, res, next) => {
         break;
     }
 
-    // 從database取得餐廳資料
+    // 取得目前頁數
+    const page = parseInt(req.query.page) || 1
+
+    // 設定搜尋條件
+    const keyword = req.query.search?.trim().toLowerCase();
+    const whereCondition = keyword ? {
+      [Op.or]: [
+        { name: { [Op.like]: `%${keyword}%` } },
+        { name_en: { [Op.like]: `%${keyword}%` } },
+        { category: { [Op.like]: `%${keyword}%` } },
+        { location: { [Op.like]: `%${keyword}%` } },
+        { description: { [Op.like]: `%${keyword}%` } }
+      ]
+    } : {}
+
+    // 從資料庫取得餐廳資料
     const restaurants = await Restaurant.findAll({
       attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'rating', 'description'],
+      where: whereCondition,
       order: condition,
+      offset: (page - 1) * limit,
+      limit,
       raw: true
     })
-
-    // 若關鍵字存在則進行篩選，若無關鍵字則回傳所有資料
-    const keyword = req.query.search?.trim().toLowerCase()
-    let matchedRestaurants = []
-
-    if (keyword) {
-      matchedRestaurants = restaurants.filter((rst) => 
-        Object.values(rst).some((prop) => {
-          if (typeof prop === 'string') {
-            return prop.toLowerCase().includes(keyword)
-          }
-          return false
-        })
-      )
-    } else {
-      matchedRestaurants = restaurants
-    } 
     
+    // 計算最大頁數
+    let count = ''
+    if (keyword) {
+      count = await Restaurant.count({
+        where: whereCondition
+      })
+    } else {
+      count = await Restaurant.count()
+    }
+    maxPage = Math.ceil(count / limit)
+    
+    // 若指定頁數超過最大頁數則重新導向
+    if (restaurants.length > 0 && page > maxPage) {
+      res.redirect(`/restaurants?search=${keyword}&sort=${sort}&page=${maxPage}`)
+    }
+
     // 渲染畫面
-    res.render('index', {restaurants: matchedRestaurants, keyword, sort, 
-      noResult: matchedRestaurants.length === 0    
+    res.render('index', {restaurants, keyword, sort, 
+      noResult: restaurants.length === 0,
+      page, maxPage,
+      prev: page > 1 ? page - 1 : 1,
+      next: page < maxPage ? page + 1 : maxPage  
     })
   
   // 錯誤處理

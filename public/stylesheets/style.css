@@ -149,3 +149,16 @@ header {
 .hidden {
   opacity: 0;
 }
+
+#page-input {
+  display: inline !important;
+  margin-right: 5px;
+  max-width: 70px;
+  text-align: center;
+}
+
+#page-input::-webkit-outer-spin-button,
+#page-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
