@@ -32,7 +32,7 @@
         {{#each restaurants as |restaurant|}}
         <div class="text-secondary" style="text-decoration: none;">
           <div class="card mb-3">
-            <a href="/restaurant/{{restaurant.id}}" style="text-decoration: none;">
+            <a href="/restaurants/{{restaurant.id}}" style="text-decoration: none;">
               <img class="card-img-top" src="{{#if restaurant.image}}{{restaurant.image}}{{else}}/image/no-img.jpg{{/if}}" onerror="this.src='/image/not-available.png';" alt="{{restaurant.name}}">
             
               <div class="card-body p-3">
@@ -50,10 +50,10 @@
             </a>
 
               <div class="fn-bar mt-3">
-                <a href="/restaurant/{{restaurant.id}}/edit">
+                <a href="/restaurants/{{restaurant.id}}/edit">
                   <i class="fa-solid fa-pen-to-square" style="margin-right: 3px;"></i>編輯
                 </a>
-                <a href="/restaurant/{{restaurant.id}}" class="ms-3">
+                <a href="/restaurants/{{restaurant.id}}" class="ms-3">
                   <i class="fa-solid fa-circle-info" style="margin-right: 3px;"></i>詳細
                 </a>
                 <form id="delete-restaurant" method="post" class="ms-3">
