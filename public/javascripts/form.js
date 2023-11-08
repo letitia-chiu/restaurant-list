@@ -13,11 +13,3 @@ form.addEventListener('submit', function onFormSubmitted(event) {
 form.addEventListener('reset', function onFormReset(event) {
   form.classList.remove('was-validated')
 })
-
-// Press enter to change page
-function handleKeyPress(event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    document.getElementById('page-form').submit();
-  }
-}
