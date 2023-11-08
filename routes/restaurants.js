@@ -6,7 +6,7 @@ const Restaurant = db.Restaurant
 
 const limit = 9 // Items per page
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   try {
     // 取得排序條件
     const sort = req.query.sort
@@ -19,6 +19,12 @@ router.get('/', async (req, res) => {
       case 'category':
       case 'location':
         condition = [[ sort ]]
+        break;
+      case 'rating_DESC':
+        condition = [['rating', 'DESC']]
+        break;
+      case 'rating_ASC':
+        condition = [['rating', 'ASC']]
         break;
     }
 
@@ -45,13 +51,15 @@ router.get('/', async (req, res) => {
     } else {
       matchedRestaurants = restaurants
     } 
-
+    
     // 渲染畫面
-    res.render('index', {restaurants: matchedRestaurants, keyword, sort})
+    res.render('index', {restaurants: matchedRestaurants, keyword, sort, 
+      noResult: matchedRestaurants.length === 0    
+    })
   
   // 錯誤處理
-  } catch (err) {
-    console.log(err)
+  } catch (error) {
+    next(error)
   }
 })
 
@@ -77,7 +85,7 @@ router.get('/:id/edit', (req, res) => {
     .catch((err) => console.log(err))
 })
 
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
   const add = req.body
   return Restaurant.create({
     name: add.name,
@@ -90,11 +98,19 @@ router.post('/', (req, res) => {
     rating: add.rating,
     description: add.description || null
   })
-    .then(() => res.redirect('/restaurants'))
-    .catch((err) => console.log(err))
+    .then(() => {
+      req.flash('success', '新增成功！')
+      res.redirect('/restaurants')
+    })
+    .catch((error) => {
+      if (error.original.code === 'ER_DATA_TOO_LONG') {
+      error.errorMessage = '更新失敗（輸入內容太長）'
+      }
+      next(error)
+    })
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id', (req, res, next) => {
   const id = req.params.id
   const edit = req.body
   return Restaurant.update({
@@ -108,15 +124,26 @@ router.put('/:id', (req, res) => {
     rating: edit.rating,
     description: edit.description || null
   }, { where: {id} })
-    .then(() => res.redirect(`/restaurants/${id}`))
-    .catch((err) => console.log(err))
+    .then(() => {
+      req.flash('success', '更新成功！')
+      res.redirect(`/restaurants/${id}`)
+  })
+    .catch((error) => {
+      if (error.original.code === 'ER_DATA_TOO_LONG') {
+      error.errorMessage = '更新失敗（輸入內容太長）'
+      }
+      next(error)
+    })
   
 })
 
 router.delete('/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.destroy({ where: {id} })
-    .then(() => res.redirect('/restaurants'))
+    .then(() => {
+      req.flash('success', '刪除成功！')
+      res.redirect('/restaurants')
+  })
     .catch((err) => console.log(err))
 })
 

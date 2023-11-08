@@ -22,7 +22,7 @@ header {
 
 .search-bar .search-bar-outer {
   margin: 0 auto;
-  max-width: 680px;
+  max-width: 700px;
   background-color: #fce2cf;
   border-radius: 8px;
   padding: 20px 30px;
@@ -127,10 +127,25 @@ header {
 .stitle-add a {
   margin-right: 10px;
   align-self: center;
-  color: #4592af;
+  color: #4593b0;
   text-decoration: none;
 }
 
 .stitle-add a:hover {
   color: #226089;
+}
+
+.message {
+  position: fixed;
+  top: 2rem;
+  right: 3.5rem;
+  padding: 15px 30px;
+  border-radius: 10px;
+  background-color: rgba(255, 222, 222, 0.8);
+  color: #9b4b4b;
+  transition: opacity 0.5s;
+}
+
+.hidden {
+  opacity: 0;
 }
