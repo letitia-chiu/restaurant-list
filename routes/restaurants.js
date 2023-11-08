@@ -67,7 +67,7 @@ router.get('/', async (req, res, next) => {
     maxPage = Math.ceil(count / limit)
     
     // 若指定頁數超過最大頁數則重新導向
-    if (restaurants.length > 0 && page > maxPage) {
+    if (page > maxPage) {
       res.redirect(`/restaurants?search=${keyword}&sort=${sort}&page=${maxPage}`)
     }
 
