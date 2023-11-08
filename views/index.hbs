@@ -2,22 +2,44 @@
 <div class="container search-bar">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
+
       <div class="stitle-add">
         <h4>尋找餐廳：</h4>
         <a href="/restaurants/new">
           <i class="fa-solid fa-circle-plus"></i> 新增餐廳
         </a>
       </div>
-            
-      <form action="/restaurants">
-        <div class="input-group">
-          <input type="text" name="search" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
-            value="" aria-describedby="search-button" value="{{keyword}}">
-          <div class="input-group-append">
-            <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+      
+      <form action="/restaurants" id="search-and-sort">
+        <div class="row">   
+
+          <div class="col-sm-8">        
+            <div class="input-group">
+              <input type="text" name="search" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
+               value="{{keyword}}" aria-describedby="search-button" >
+              <div class="input-group-append">
+                <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+              </div>
+            </div>        
           </div>
+        
+          <div class="col-sm-4">        
+            <select name="sort" class="form-select" aria-label="Default select example" id="sort"
+              onchange="document.getElementById('search-and-sort').submit()">
+              <option selected disabled>
+                排序方式
+              </option>
+              <option value="none" {{#if (eq sort 'none')}}selected{{/if}}>不排序</option>
+              <option value="ASC" {{#if (eq sort 'ASC')}}selected{{/if}}>A → Z</option>
+              <option value="DESC" {{#if (eq sort 'DESC')}}selected{{/if}}>Z → A</option>
+              <option value="category" {{#if (eq sort 'category')}}selected{{/if}}>依類別</option>
+              <option value="location" {{#if (eq sort 'location')}}selected{{/if}}>依地區</option>
+            </select>        
+          </div>
+        
         </div>
-      </form>
+      </form>    
+
     </div>
   </div>
 </div>
@@ -73,3 +95,4 @@
 </div>
 
 <script src="/javascripts/confirm-delete.js"></script>
+<script src="/javascripts/form.js"></script>

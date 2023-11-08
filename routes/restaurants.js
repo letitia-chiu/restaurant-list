@@ -4,29 +4,50 @@ const router = express.Router()
 const db = require('../models')
 const Restaurant = db.Restaurant
 
-const limit = 10 // Items per page
+const limit = 9 // Items per page
 
 router.get('/', async (req, res) => {
   try {
+    // 取得排序條件
+    const sort = req.query.sort
+    let condition = []
+    switch (sort) {
+      case 'ASC':
+      case 'DESC':
+        condition = [['name', sort]]
+        break;
+      case 'category':
+      case 'location':
+        condition = [[ sort ]]
+        break;
+    }
+
     // 從database取得餐廳資料
     const restaurants = await Restaurant.findAll({
       attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'rating', 'description'],
+      order: condition,
       raw: true
     })
 
     // 若關鍵字存在則進行篩選，若無關鍵字則回傳所有資料
     const keyword = req.query.search?.trim().toLowerCase()
-    const matchedRestaurants = keyword? restaurants.filter((rst) => 
-      Object.values(rst).some((prop) => {
-        if (typeof prop === 'string') {
-          return prop.toLowerCase().includes(keyword)
-        }
-        return false
-      })
-    ) : restaurants
+    let matchedRestaurants = []
+
+    if (keyword) {
+      matchedRestaurants = restaurants.filter((rst) => 
+        Object.values(rst).some((prop) => {
+          if (typeof prop === 'string') {
+            return prop.toLowerCase().includes(keyword)
+          }
+          return false
+        })
+      )
+    } else {
+      matchedRestaurants = restaurants
+    } 
 
     // 渲染畫面
-    res.render('index', {restaurants: matchedRestaurants, keyword})
+    res.render('index', {restaurants: matchedRestaurants, keyword, sort})
   
   // 錯誤處理
   } catch (err) {
