@@ -1,10 +1,16 @@
 # 餐廳清單 (Restaurant List)
 此專案為 ALPHA Camp Dev C3 M3 指標作業 所製作。  
 運用 Node.js 建立本機伺服器，並透過 Express 與 Template Engine (Handlebars) 建立簡易的餐廳清單網頁。  
-於 Dev C4後端 M1 指標作業 中加入資料庫（MySQL）以及 CRUD 的應用。
+於 Dev C4後端 M1 指標作業 中加入資料庫（MySQL）以及 CRUD 的應用。  
+於 Dev C4後端 M2 指標作業 中加入排序功能、分頁功能，以及 middlewares 應用。
 
 ## 版本
-- v2.0.1 (2023.11.05) ⭐️ 目前版本
+- v2.1.0 (2023.11.05) ⭐️ 目前版本
+  - 重構路由並加入 middlewares 應用。
+  - 新增排序功能。
+  - 新增分頁功能並優化資料庫處理。
+  - 加入處理結果的提示訊息。
+- v2.0.1 (2023.11.05) 
   - 修正編輯畫面無法正確帶入既有說明內容的問題
 - v2.0.0 (2023.11.04) 
   - 增加「新增餐廳」、「刪除餐廳」、「編輯餐廳」功能
@@ -15,10 +21,11 @@
 - ~~自靜態 json 檔載入並~~ 列出餐廳清單於首頁。  
   → v2.0.0版改為從MySQL資料庫中取得餐廳資料
 - 檢視個別餐廳的詳細資訊頁面。
-- 透過餐廳的中英文名稱、種類、描述搜尋。
+- 透過餐廳的 中英文名稱、種類、地址、電話、描述 來搜尋。
 - 可自行新增餐廳，並將資料儲存於資料庫中。
 - 可刪除餐廳資料。
 - 可編輯餐廳資料。
+- 可選擇餐廳列表的排序方式。
 
 ## 執行環境 (RTE)
 [Node.js](https://nodejs.org/) (v18.18.0)  
@@ -90,6 +97,8 @@ npm run start
 - HTTP method套件：[method-override v3.0.0](https://www.npmjs.com/package/method-override)
 - 樣式框架：[Bootstrap v5.3](https://getbootstrap.com/docs/5.3/getting-started/download/)
 - 字體圖標工具：[Font Awesome](https://fontawesome.com/)
+- [connect-flash v0.1.1](https://www.npmjs.com/package/connect-flash)
+- [express-session v1.17.3](https://www.npmjs.com/package/express-session)
 
 ## 開發者 (Contributor)
 [Letitia Chiu](https://github.com/letitia-chiu)
