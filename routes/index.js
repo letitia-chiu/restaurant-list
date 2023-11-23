@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const bcrypt = require('bcryptjs')
 
 const db = require('../models')
 const User = db.User
@@ -14,10 +15,16 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (username, password, 
     raw: true
   })
     .then((user) => {
-      if (!user || user.password !== password) {
+      if (!user) {
         return done(null, false, { message: 'email 或密碼錯誤' })
       }
-      done(null, user)
+
+      return bcrypt.compare(password, user.password)
+       .then((isMatch) => {
+        if (!isMatch) return done(null, false, { message: 'email 或密碼錯誤' })
+
+        return done(null, user)
+       })
     })
     .catch((error) => done(error))
 }))
@@ -27,15 +34,19 @@ passport.serializeUser((user, done) => {
   return done(null, { id, name, email })
 })
 
+passport.deserializeUser((user, done) => {
+  done(null, { id: user.id, name: user.name })
+})
+
 const restaurants = require('./restaurants')
 const users = require('./users')
+const authHandler = require('../middlewares/auth-handler')
 
-
-router.use('/restaurants', restaurants)
+router.use('/restaurants', authHandler, restaurants)
 router.use('/users', users)
 
-router.get('/', (req, res) => {
-  res.redirect('/login')
+router.get('/', authHandler, (req, res) => {
+  res.redirect('/restaurants')
 })
 
 router.get('/register', (req, res, next) => {
@@ -53,7 +64,12 @@ router.post('/login', passport.authenticate('local', {
 }))
 
 router.post('/logout', (req, res ,next) => {
-  res.send('You have logout!')
+  req.logout((error) => {
+    if (error) next(error)
+
+    req.flash('success', '已登出，歡迎重新登入')
+    return res.redirect('/login')
+  })
 })
 
 module.exports = router
