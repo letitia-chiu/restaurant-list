@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="card my-5">
+    <form action="/login" method="post" id="login-form" class="needs-validation" novalidate>
+      <div class="card-header" style="font-weight: bold;">
+        登入
+      </div>
+
+      <div class="card-body">
+
+        {{!-- E-mail --}}
+        <div class="row mb-3">
+          <label for="email" class="col-sm-4 col-form-label">E-mail（登入帳號）</label>
+          <div class="col-sm-8">
+            <input name="email" type="email" class="form-control" id="email" value="" required>
+            <div class="invalid-feedback">* 請輸入有效電子信箱</div>
+          </div>
+        </div>
+
+        {{!-- 密碼 --}}
+        <div class="row mb-3">
+          <label for="password" class="col-sm-4 col-form-label">密碼</label>
+          <div class="col-sm-8">
+            <input name="password" type="password" class="form-control" id="password" value="" required>
+            <div class="invalid-feedback">* 請輸入密碼</div>
+          </div>
+        </div>
+
+      </div> {{!-- card-body --}}
+
+      <div class="card-footer text-muted d-flex justify-content-end">
+        <div style="text-align:center; line-height: 50px;">沒有帳號？ <a href="/register">註冊</a></div>
+
+        <button type="submit" class="btn btn-success ms-4">
+          <i class="fa-solid fa-right-to-bracket" style="margin-right: 10px;"></i>登入
+        </button>
+
+        <button type="button" class="btn btn-primary ms-3" id="clear-btn">
+          <i class="fa-brands fa-facebook" style="margin-right: 10px;"></i>以 Facebook 登入
+        </button>
+
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script src="/javascripts/form.js"></script>

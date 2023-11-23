@@ -1,4 +1,4 @@
-const form = document.getElementById('create-form')
+const form = document.getElementById('create-form') || document.getElementById('edit-form') || document.getElementById('register-form') || document.getElementById('login-form')
 
 // Form validation
 form.addEventListener('submit', function onFormSubmitted(event) {
