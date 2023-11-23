@@ -1,9 +1,13 @@
 <div class="user-dashboard">
-  <span>Hi, user!</span>
+  {{#if user_name}}
+  <span>Hi, {{user_name}} !</span>
 
   <form action="/logout" method="post" class="ms-3" style="display: inline;">
     <button type="submit" class="btn btn-secondary">登出</button>
   </form>
+  {{/if}}
   
-  <a href="/login"><button class="btn btn-info">登入</button></a>
+  {{#if (not user_name)}}
+  <a href="/login"><button class="btn btn-success">登入</button></a>
+  {{/if}}
 </div>

@@ -1,5 +1,8 @@
 module.exports = (req, res, next) => {
-  if (req.isAuthenticated()) return next()
+  if (req.isAuthenticated()) {
+    res.locals.user_name = req.user.name || `會員(${req.user.id})`
+    return next()
+  }
 
   // 若登入驗證未通過，重新導向至登入頁
   req.flash('error', '登入失敗！')
