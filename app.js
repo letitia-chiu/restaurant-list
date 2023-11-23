@@ -3,11 +3,15 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const app = express()
 
+// add env settings here
+
 const { engine } = require('express-handlebars')
 const methodOverride = require('method-override')
 const handlebars = require('handlebars')
 
 const router = require('./routes')
+const passport = require('passport')
+
 const messageHandler = require('./middlewares/message-handler')
 const errorHandler = require('./middlewares/error-handler')
 
@@ -31,6 +35,8 @@ app.use(session({
   saveUninitialized: false
 }))
 app.use(flash())
+
+app.use(passport.initialize())
 
 app.use(messageHandler)
 
