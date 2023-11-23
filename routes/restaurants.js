@@ -13,11 +13,12 @@ router.get('/', restaurantHandler.getAll, async (req, res, next) => {
       restaurants: filteredRestaurants,
       keyword,
       sort: sortOption, 
-      noResult: filteredRestaurants.length === 0,
+      noResult: keyword && filteredRestaurants.length === 0,
+      noData: !keyword && filteredRestaurants.length === 0,
       page: currentPage,
       maxPage,
       prev: currentPage > 1 ? currentPage - 1 : 1,
-      next: currentPage < maxPage ? currentPage + 1 : maxPage  
+      next: currentPage < maxPage ? currentPage + 1 : maxPage,
     })
 
   } catch (error) {

@@ -33,17 +33,22 @@ restaurantHandler.getAll = async (req, res, next) => {
     const currentPage = parseInt(req.query.page) || 1
 
     // 設定搜尋條件
+    const userId = req.user.id
     const keyword = req.query.search?.trim().toLowerCase();
     const searchCondition = keyword ? {
-      [Op.or]: [
-        { name: { [Op.like]: `%${keyword}%` } },
-        { name_en: { [Op.like]: `%${keyword}%` } },
-        { category: { [Op.like]: `%${keyword}%` } },
-        { location: { [Op.like]: `%${keyword}%` } },
-        { phone: { [Op.like]: `%${keyword}%` } },
-        { description: { [Op.like]: `%${keyword}%` } }
-      ]
-    } : {}
+      [Op.and]: [
+        {
+          [Op.or]: [
+            { name: { [Op.like]: `%${keyword}%` } },
+            { name_en: { [Op.like]: `%${keyword}%` } },
+            { category: { [Op.like]: `%${keyword}%` } },
+            { location: { [Op.like]: `%${keyword}%` } },
+            { phone: { [Op.like]: `%${keyword}%` } },
+            { description: { [Op.like]: `%${keyword}%` } }
+          ]
+        }, { userId }
+      ]      
+    } : { userId } // 若無 keyword，條件只限制使用者id
 
     // 從資料庫取得餐廳資料
     const filteredRestaurants = await Restaurant.findAll({
@@ -62,12 +67,12 @@ restaurantHandler.getAll = async (req, res, next) => {
         where: searchCondition
       })
     } else {
-      restaurantCount = await Restaurant.count()
+      restaurantCount = await Restaurant.count({ where: userId })
     }
     const maxPage = Math.ceil(restaurantCount / limit)
 
     // 若指定頁數超過最大頁數則重新導向
-    if (currentPage > maxPage) {
+    if (maxPage >0 && currentPage > maxPage) {
       return res.redirect(`/restaurants?search=${keyword}&sort=${sortOption}&page=${maxPage}`)
     }
 
@@ -88,10 +93,24 @@ restaurantHandler.getAll = async (req, res, next) => {
 restaurantHandler.getById = async (req, res, next) => {
   try {
     const id = req.params.id
+    const userId = req.user.id
+
     req.restaurant = await Restaurant.findByPk(id, {
-      attributes: ['id', 'name', 'category', 'image', 'location', 'phone', 'google_map', 'description'],
+      attributes: ['id', 'name', 'category', 'image', 'location', 'phone', 'google_map', 'description', 'userId'],
       raw: true
     })
+
+    // 找不到對應資料時的處理
+    if (!req.restaurant) {
+      req.flash('error', '找不到資料')
+      return res.redirect('/restaurants')
+    }
+
+    // 無權限時的處理
+    if (req.restaurant.userId !== userId) {
+      req.flash('error', '無權限查看此資料')
+      return res.redirect('/restaurants')
+    }
 
     next()
 
@@ -103,9 +122,23 @@ restaurantHandler.getById = async (req, res, next) => {
 restaurantHandler.getEdit = async (req, res, next) => {
   try {
     const id = req.params.id
+    const userId = req.user.id
+
     req.restaurant = await Restaurant.findByPk(id, {
       raw: true
     })
+
+    // 找不到對應資料時的處理
+    if (!req.restaurant) {
+      req.flash('error', '找不到資料')
+      return res.redirect('/restaurants')
+    }
+
+    // 無權限時的處理
+    if (req.restaurant.userId !== userId) {
+      req.flash('error', '無權限編輯此資料')
+      return res.redirect('/restaurants')
+    }
 
     next()
 
@@ -117,6 +150,7 @@ restaurantHandler.getEdit = async (req, res, next) => {
 restaurantHandler.create = async (req, res, next) => {
   try {
     const add = req.body
+    const userId = req.user.id
 
     await Restaurant.create({
       name: add.name,
@@ -127,7 +161,8 @@ restaurantHandler.create = async (req, res, next) => {
       phone: add.phone,
       google_map: add.google_map || null,
       rating: add.rating,
-      description: add.description || null
+      description: add.description || null,
+      userId
     })
 
     req.flash('success', '新增成功！')
@@ -144,8 +179,23 @@ restaurantHandler.create = async (req, res, next) => {
 restaurantHandler.update = async (req, res, next) => {
   try {
     const id = req.params.id
+    const userId = req.user.id
     const edit = req.body
 
+    // 先取得資料並驗證資料與使用者
+    const restaurant = await Restaurant.findByPk(id, {
+      attributes: ['id', 'userId']
+    })
+    if (!restaurant) {
+      req.flash('error', '找不到資料')
+      return res.redirect('/restaurants')
+    }
+    if (restaurant.userId !== userId) {
+      req.flash('error', '無權限編輯此資料')
+      return res.redirect('/restaurants')
+    }
+
+    // 驗證成功後執行資料更新
     await Restaurant.update({
       name: edit.name,
       name_en: edit.name_en || null,
@@ -172,7 +222,22 @@ restaurantHandler.update = async (req, res, next) => {
 restaurantHandler.delete = async (req, res, next) => {
   try {
     const id = req.params.id
+    const userId = req.user.id
 
+    // 先取得資料並驗證資料與使用者
+    const restaurant = await Restaurant.findByPk(id, {
+      attributes: ['id', 'userId']
+    })
+    if (!restaurant) {
+      req.flash('error', '找不到資料')
+      return res.redirect('/restaurants')
+    }
+    if (restaurant.userId !== userId) {
+      req.flash('error', '無權限刪除此資料')
+      return res.redirect('/restaurants')
+    }
+    
+    // 驗證通過後執行刪除
     await Restaurant.destroy({ where: {id} })
 
     req.flash('success', '刪除成功！')

@@ -20,6 +20,9 @@ const port = 3000
 handlebars.registerHelper('eq', (arg1, arg2) => {
   return arg1 === arg2
 })
+handlebars.registerHelper('or', (arg1, arg2) => {
+  return arg1 || arg2
+})
 
 app.engine('.hbs', engine({extname: '.hbs'}))
 app.set('view engine', '.hbs')
