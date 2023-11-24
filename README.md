@@ -36,7 +36,7 @@
 
 ## 執行環境 (RTE)
 [Node.js](https://nodejs.org/) (v18.18.0)  
-[MySQL](https://dev.mysql.com/downloads/installer/) (v8.0.35)  
+[MySQL](https://dev.mysql.com/downloads/mysql/) (v8.0.35)  
 ℹ️ *執行此專案前，需安裝 Node.js 與 MySQL。*
 
 ## 安裝 (Installation)
