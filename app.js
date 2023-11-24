@@ -3,6 +3,8 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const app = express()
 
+// Set environment variable
+console.log('NODE_ENV:', process.env.NODE_ENV)
 if (process.env.NODE_ENV === 'development') {
   require('dotenv').config()
 }

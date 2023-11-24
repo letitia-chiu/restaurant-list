@@ -20,7 +20,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js",
+    "start:dev": "NODE_ENV=development node app.js",
+    "dev": "NODE_ENV=development nodemon app.js",
     "db:create": "node create-db.js",
     "db:migrate": "npx sequelize db:migrate",
     "db:seed": "npx sequelize db:seed:all",
