@@ -67,12 +67,12 @@ restaurantHandler.getAll = async (req, res, next) => {
         where: searchCondition
       })
     } else {
-      restaurantCount = await Restaurant.count({ where: userId })
+      restaurantCount = await Restaurant.count({ where: { userId } })
     }
     const maxPage = Math.ceil(restaurantCount / limit)
 
     // 若指定頁數超過最大頁數則重新導向
-    if (maxPage >0 && currentPage > maxPage) {
+    if (maxPage > 0 && currentPage > maxPage) {
       return res.redirect(`/restaurants?search=${keyword}&sort=${sortOption}&page=${maxPage}`)
     }
 
