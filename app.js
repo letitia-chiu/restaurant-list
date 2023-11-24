@@ -14,7 +14,7 @@ const methodOverride = require('method-override')
 const handlebars = require('handlebars')
 
 const router = require('./routes')
-const passport = require('passport')
+const passport = require('./config/passport')
 
 const messageHandler = require('./middlewares/message-handler')
 const errorHandler = require('./middlewares/error-handler')
