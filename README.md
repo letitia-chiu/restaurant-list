@@ -2,7 +2,7 @@
 此專案為 ALPHA Camp Dev C3 M3 指標作業 所製作。  
 運用 Node.js 建立本機伺服器，並透過 Express 與 Template Engine (Handlebars) 建立簡易的餐廳清單網頁。  
 於 Dev C4後端 M1 指標作業 中加入資料庫（MySQL）以及 CRUD 的應用。  
-於 Dev C4後端 M2 指標作業 中加入排序功能、分頁功能，以及 middlewares 應用。
+於 Dev C4後端 M2 指標作業 中加入排序功能、分頁功能，以及 middlewares 應用。  
 於 Dev C4後端 M3 指標作業 中加入註冊帳號與登入功能。
 
 ## 版本
@@ -90,13 +90,14 @@ npm run db:seed
 
 請參照根目錄下的 `.env.example` 檔，於根目錄下新增 `.env` 檔並進行相關設定：
 ```
-SESSION_SECRET= 請自行設定
-FACEBOOK_CLIENT_ID= 請取得並自行設定 Facebook Client ID
-FACEBOOK_CLIENT_SECRET= 請取得並自行設定 Facebook Client Secret
+SESSION_SECRET= 【 請自行設定 】
+FACEBOOK_CLIENT_ID= 【 請自行設定 】
+FACEBOOK_CLIENT_SECRET= 【 請自行設定 】
 
 FACEBOOK_CALLBACK_URL=http://localhost:3000/oauth2/redirect/facebook
 ```
-請自行設定 SESSION_SECRET、FACEBOOK_CLIENT_ID、FACEBOOK_CLIENT_SECRET  
+請自行設定 SESSION_SECRET、FACEBOOK_CLIENT_ID、FACEBOOK_CLIENT_SECRET。  
+（若無 Facebook Client Id / secret，請先取得，否則無法使用 Facebook 登入）  
 FACEBOOK_CALLBACK_URL 建議依照  `.env.example` 預設值設定即可，若欲更改，需同步修改登入/登出路由 `./routes/login-logout.js` 中的路由設定：
 ```
 router.get('/oauth2/redirect/facebook', passport.authenticate('facebook', {
@@ -104,13 +105,12 @@ router.get('/oauth2/redirect/facebook', passport.authenticate('facebook', {
   failureRedirect: '/login',
   failureFlash: true
 }))
-
-// 此處的 '/oauth2/redirect/facebook' 需與 FACEBOOK_CALLBACK_URL 之設定同步
 ```
+此處的 '/oauth2/redirect/facebook' 需與 FACEBOOK_CALLBACK_URL 之設定同步。
 
 6. 啟動伺服器
-啟動伺服器前，請先設置環境變數 NODE_ENV=development，  
-再執行以下指令已啟動伺服器：
+
+啟動伺服器前，請先設置環境變數 NODE_ENV=development，再執行以下指令以啟動伺服器：
 
 ```
 npm run start
