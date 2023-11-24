@@ -7,6 +7,7 @@ const User = db.User
 
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
+const FacebookStrategy = require('passport-facebook')
 
 passport.use(new LocalStrategy({ usernameField: 'email' }, (username, password, done) => {
   return User.findOne({
@@ -28,6 +29,8 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (username, password, 
     })
     .catch((error) => done(error))
 }))
+
+
 
 passport.serializeUser((user, done) => {
   const { id, name, email } = user

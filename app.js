@@ -3,7 +3,9 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const app = express()
 
-// add env settings here
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config()
+}
 
 const { engine } = require('express-handlebars')
 const methodOverride = require('method-override')
@@ -36,7 +38,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
 app.use(session({
-  secret: 'test_secret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }))
