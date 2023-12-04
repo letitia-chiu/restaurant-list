@@ -223,6 +223,8 @@ restaurantHandler.delete = async (req, res, next) => {
   try {
     const id = req.params.id
     const userId = req.user.id
+    const referer = req.headers.referer || '/restaurants'
+    console.log('referer:', referer)
 
     // 先取得資料並驗證資料與使用者
     const restaurant = await Restaurant.findByPk(id, {
@@ -241,7 +243,7 @@ restaurantHandler.delete = async (req, res, next) => {
     await Restaurant.destroy({ where: {id} })
 
     req.flash('success', '刪除成功！')
-    res.redirect('/restaurants')
+    res.redirect(referer)
 
   } catch (error) {
     next(error)
