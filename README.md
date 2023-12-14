@@ -6,7 +6,9 @@
 於 Dev C4後端 M3 指標作業 中加入註冊帳號與登入功能。
 
 ## 版本
-- v3.0.0 (2023.11.24) ⭐️ 目前版本
+- v3.0.1 (2023.12.14) ⭐️ 目前版本
+  - 修改快速建立資料庫設定檔「create-db.js」之連線設定方式。
+- v3.0.0 (2023.11.24)
   - 資料庫新增使用者資料，並建立使用者與餐廳資料之關聯。
   - 新增使用者註冊帳號與登入功能，以及透過 Oath2.0 進行 Facebook 登入。
 - v2.1.0 (2023.11.09) 
@@ -66,14 +68,14 @@ npm install
 npm run setup-db
 ```
 ⚠️ **執行上述指令前，請先確認是否需更改預設設定**  
---- MySQL server 之預設設定如下：
+--- MySQL server 連線之預設設定如下：
 ```
-hostname: 'localhost'
-user: 'root'
+host: '127.0.0.1'  // localhost
+username: 'root'
 password: 'password'
 database: 'restaurant'
 ```
-若欲更改設定，請編輯專案資料夾根目錄下的 `create-db.js` 檔，並將修改後的設定同步更新至 `/config/config.json` 中的 "development"  
+若欲更改設定，請編輯專案資料夾中 `/config/config.json` 中的 "development"  
   
 您也可以透過以下指令分別執行資料庫建立、資料表建立、匯入種子資料：
 ```
